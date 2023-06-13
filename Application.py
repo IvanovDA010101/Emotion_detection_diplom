@@ -18,7 +18,7 @@ face_classifier = cv2.CascadeClassifier(
     r'haarcascade_frontalface_default.xml')
 classifier = load_model(r'model.h5')
 
-emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+emotion_labels = ['Злость', 'Отвращение', 'Страх', 'Радость', 'Нейтральный', 'Грусть', 'Удивление']
 
 
 class Form:
@@ -282,9 +282,9 @@ class VideoStream:
                         prediction = classifier.predict(roi)[0]
                         label = emotion_labels[prediction.argmax()]
                         label_position = (x, y)
-                        cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                        cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
                     else:
-                        cv2.putText(frame, 'No Faces', (30, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                        cv2.putText(frame, 'Нет лиц', (30, 80), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
                 imgColor = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 self.photo = ImageTk.PhotoImage(image=Image.fromarray(imgColor))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
@@ -325,9 +325,9 @@ class PhotoViewer:
                     prediction = classifier.predict(roi)[0]
                     label = emotion_labels[prediction.argmax()]
                     label_position = (x, y)
-                    cv2.putText(img, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 10, (0, 255, 0), 10)
+                    cv2.putText(img, label, label_position, cv2.FONT_HERSHEY_COMPLEX, 10, (0, 255, 0), 10)
                 else:
-                    cv2.putText(img, 'No Faces', (30, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 10)
+                    cv2.putText(img, 'Нет лиц', (30, 80), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 10)
             dim = (400, 350)
             imgRes = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
             imgColor = cv2.cvtColor(imgRes, cv2.COLOR_BGR2RGB)
