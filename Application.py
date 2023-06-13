@@ -285,7 +285,8 @@ class VideoStream:
                         cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                     else:
                         cv2.putText(frame, 'No Faces', (30, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
+                imgColor = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                self.photo = ImageTk.PhotoImage(image=Image.fromarray(imgColor))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
 
         self.window.after(15, self.update)
@@ -329,7 +330,8 @@ class PhotoViewer:
                     cv2.putText(img, 'No Faces', (30, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 10)
             dim = (400, 350)
             imgRes = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-            image = Image.fromarray(imgRes)
+            imgColor = cv2.cvtColor(imgRes, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(imgColor)
             self.photo = ImageTk.PhotoImage(image)
             self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
 
