@@ -55,19 +55,33 @@ class Form:
         photo_viewer = PhotoViewer(photo_window)
 
     def show_graphics(self):
-        x = [1, 2, 3, 4, 5]
-        y = [10, 5, 7, 3, 8]
-
-        plt.plot(x, y)
-        plt.xlabel('X')
-        plt.ylabel('Y')
-        plt.title('График')
-        plt.show()
+        graphics_window = tk.Toplevel(self.window)
+        graphics_window.title("Графики")
+        graphics_window = GraphicsViewer(graphics_window)
 
     def training(self):
         edu_window = tk.Toplevel(self.window)
         edu_window.title("Обучение")
         edu_viewer = ModelTrainer(edu_window)
+
+
+class GraphicsViewer:
+    def __init__(self, window):
+        window.geometry('1000x500')
+        self.window = window
+        self.canvas = None
+        self.graphics = None
+        self.display_graphics()
+
+    def display_graphics(self):
+        self.canvas = tk.Canvas(self.window,width=1000, height=500)
+        self.canvas.pack()
+        self.display_info()
+
+    def display_info(self):
+        picture = Image.open('graph.jpg').resize((1000,500))
+        self.graphics = ImageTk.PhotoImage(picture)
+        self.canvas.create_image(0, 0, image=self.graphics, anchor=tk.NW)
 
 
 class ModelTrainer:
@@ -87,7 +101,7 @@ class ModelTrainer:
         self.canvas = tk.Canvas(self.window)
         self.canvas.pack()
 
-        self.info_button = tk.Button(self.window, text="Инфо", command=self.load_model)
+        self.info_button = tk.Button(self.window, text="Модель", command=self.load_model)
         self.info_button.pack()
 
         start_button = tk.Button(self.window, text="Старт", command=self.train_model)
@@ -338,7 +352,8 @@ class PhotoViewer:
 
 def start_form():
     root = tk.Tk()
-    root.title("Form")
+    root.title("Распознавание эмоций")
+    root.geometry('200x110+300+200')
     form = Form(root)
     root.mainloop()
 
